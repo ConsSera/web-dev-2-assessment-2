@@ -1,46 +1,305 @@
 /* Teaching document styling adapted and repaired with OpenAI ChatGPT/Codex.
    Prompt: "ok , lets go" following the responsive TaskFlowManager repair plan. */
-:root { font-family: system-ui, sans-serif; color: #17263a; background: #f1f5fa; font-synthesis: none; }
-* { box-sizing: border-box; }
-body { margin: 0; }
-button, input, select { font: inherit; }
-button { cursor: pointer; }
-button:disabled { opacity: .55; cursor: wait; }
-button, input, select { min-height: 44px; }
-:focus-visible { outline: 3px solid #2563eb; outline-offset: 3px; }
-.task-app { max-width: 1100px; margin: auto; padding: 32px 16px 64px; }
-.app-header { margin-bottom: 24px; }
-h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -.04em; margin: 8px 0; }
-h2 { font-size: 1.2rem; margin: 0 0 24px; }
-p { color: #53657c; }
-.eyebrow { color: #2563eb; font-size: .75rem; font-weight: 750; letter-spacing: .12em; }
-.app-body { display: flex; flex-direction: column; gap: 24px; }
-.form-card, .list-card { padding: 24px; border: 1px solid #dbe3ee; border-radius: 16px; background: white; box-shadow: 0 4px 16px #14243b06; min-width: 0; }
-fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
-.field-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
-label { font-weight: 600; font-size: .9rem; }
-input:not([type=checkbox]), select { width: 100%; padding: 12px; border: 1px solid #bdcbdc; border-radius: 8px; background: #f8fafc; }
-button { padding: 10px 14px; border-radius: 8px; border: 1px solid transparent; font-weight: 600; }
-.btn-primary { width: 100%; color: white; background: #2563eb; }
-.btn-primary:hover { background: #1d4ed8; }
-.btn-secondary { background: #f1f5f9; color: #43556c; border-color: #cbd5e1; }
-.dashboard-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 24px; }
-.dashboard-header h2 { margin-bottom: 6px; }
-.dashboard-header p { margin: 0; font-size: .85rem; }
-.task-grid { padding: 0; margin: 0; list-style: none; display: grid; gap: 12px; }
-.task-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px; border: 1px solid #dbe3ee; border-radius: 10px; }
-.task-info { min-width: 0; }
-.task-title { display: flex; align-items: center; gap: 10px; overflow-wrap: anywhere; }
-input[type=checkbox] { width: 20px; height: 20px; min-height: 20px; flex-shrink: 0; accent-color: #2563eb; }
-.badge { display: inline-block; border-radius: 20px; padding: 4px 10px; font-size: .75rem; margin-bottom: 10px; font-weight: 650; }
-.work { background: #eff6ff; color: #1d4ed8; }
-.study { background: #f0fdf4; color: #166534; }
-.personal { background: #faf5ff; color: #7e22ce; }
-.completed { background: #f8fafc; }
-.completed .task-title span { text-decoration: line-through; color: #64748b; }
-.btn-delete { background: #fef2f2; color: #b91c1c; flex-shrink: 0; }
-.empty { padding: 32px 0; text-align: center; line-height: 1.6; }
-.error { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: 16px; border-radius: 10px; }
-.feedback { min-height: 24px; font-size: .9rem; }
-@media (min-width: 768px) { .task-app { padding: 48px 32px; } .app-body { flex-direction: row; align-items: flex-start; } .form-card { flex: 1; position: sticky; top: 24px; } .list-card { flex: 2; } }
-@media (max-width: 380px) { .form-card, .list-card { padding: 16px; } .task-item { align-items: flex-start; flex-direction: column; } }
+:root {
+   font-family: system-ui, sans-serif;
+   color: #17263a;
+   background: #f1f5fa;
+   font-synthesis: none;
+}
+
+* {
+   box-sizing: border-box;
+}
+
+body {
+   margin: 0;
+}
+
+button,
+input,
+select {
+   font: inherit;
+}
+
+button {
+   cursor: pointer;
+}
+
+button:disabled {
+   opacity: .55;
+   cursor: wait;
+}
+
+button,
+input,
+select {
+   min-height: 44px;
+}
+
+:focus-visible {
+   outline: 3px solid #2563eb;
+   outline-offset: 3px;
+}
+
+.task-app {
+   max-width: 1100px;
+   margin: auto;
+   padding: 32px 16px 64px;
+}
+
+.app-header {
+   margin-bottom: 24px;
+}
+
+h1 {
+   font-size: clamp(2rem, 5vw, 3rem);
+   letter-spacing: -.04em;
+   margin: 8px 0;
+}
+
+h2 {
+   font-size: 1.2rem;
+   margin: 0 0 24px;
+}
+
+p {
+   color: #53657c;
+}
+
+.eyebrow {
+   color: #2563eb;
+   font-size: .75rem;
+   font-weight: 750;
+   letter-spacing: .12em;
+}
+
+.app-body {
+   display: flex;
+   flex-direction: column;
+   gap: 24px;
+}
+
+.form-card,
+.list-card {
+   padding: 24px;
+   border: 1px solid #dbe3ee;
+   border-radius: 16px;
+   background: white;
+   box-shadow: 0 4px 16px #14243b06;
+   min-width: 0;
+}
+
+fieldset {
+   border: 0;
+   margin: 0;
+   padding: 0;
+   min-width: 0;
+}
+
+.field-group {
+   display: flex;
+   flex-direction: column;
+   gap: 8px;
+   margin-bottom: 20px;
+}
+
+label {
+   font-weight: 600;
+   font-size: .9rem;
+}
+
+input:not([type=checkbox]),
+select {
+   width: 100%;
+   padding: 12px;
+   border: 1px solid #bdcbdc;
+   border-radius: 8px;
+   background: #f8fafc;
+}
+
+button {
+   padding: 10px 14px;
+   border-radius: 8px;
+   border: 1px solid transparent;
+   font-weight: 600;
+}
+
+.btn-primary {
+   width: 100%;
+   color: white;
+   background: #2563eb;
+}
+
+.btn-primary:hover {
+   background: #1d4ed8;
+}
+
+.btn-secondary {
+   background: #f1f5f9;
+   color: #43556c;
+   border-color: #cbd5e1;
+}
+
+.dashboard-header {
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+   justify-content: space-between;
+   gap: 12px;
+   margin-bottom: 24px;
+}
+
+.dashboard-header h2 {
+   margin-bottom: 6px;
+}
+
+.dashboard-header p {
+   margin: 0;
+   font-size: .85rem;
+}
+
+.task-grid {
+   padding: 0;
+   margin: 0;
+   list-style: none;
+   display: grid;
+   gap: 12px;
+}
+
+.task-item {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 12px;
+   padding: 16px;
+   border: 1px solid #dbe3ee;
+   border-radius: 10px;
+}
+
+.task-info {
+   min-width: 0;
+}
+
+.task-title {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   overflow-wrap: anywhere;
+}
+
+input[type=checkbox] {
+   width: 20px;
+   height: 20px;
+   min-height: 20px;
+   flex-shrink: 0;
+   accent-color: #2563eb;
+}
+
+.badge {
+   display: inline-block;
+   border-radius: 20px;
+   padding: 4px 10px;
+   font-size: .75rem;
+   margin-bottom: 10px;
+   font-weight: 650;
+}
+
+.work {
+   background: #eff6ff;
+   color: #1d4ed8;
+}
+
+.study {
+   background: #f0fdf4;
+   color: #166534;
+}
+
+.personal {
+   background: #faf5ff;
+   color: #7e22ce;
+}
+
+.completed {
+   background: #f8fafc;
+}
+
+.completed .task-title span {
+   text-decoration: line-through;
+   color: #64748b;
+}
+
+.btn-delete {
+   background: #fef2f2;
+   color: #b91c1c;
+   flex-shrink: 0;
+}
+
+.empty {
+   padding: 32px 0;
+   text-align: center;
+   line-height: 1.6;
+}
+
+.error {
+   background: #fef2f2;
+   border: 1px solid #fecaca;
+   color: #991b1b;
+   padding: 16px;
+   border-radius: 10px;
+}
+
+.feedback {
+   min-height: 24px;
+   font-size: .9rem;
+}
+
+@media (min-width: 768px) {
+   .task-app {
+      padding: 48px 32px;
+   }
+
+   .app-body {
+      flex-direction: row;
+      align-items: flex-start;
+   }
+
+   .form-card {
+      flex: 1;
+      position: sticky;
+      top: 24px;
+   }
+
+   .list-card {
+      flex: 2;
+   }
+}
+
+@media (max-width: 380px) {
+
+   .form-card,
+   .list-card {
+      padding: 16px;
+   }
+
+   .task-item {
+      align-items: flex-start;
+      flex-direction: column;
+   }
+}
+
+.task-filters {
+   display: grid;
+   grid-template-columns: 1fr;
+   gap: 12px;
+   margin-bottom: 20px;
+}
+
+.task-filters .field-group {
+   margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+   .task-filters {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+   }
+}
